@@ -1,7 +1,7 @@
 # EEPROM_SPI_WE
 Arduino library for SPI based EEPROMs
 
-With this library you can write data to and read data from SPI based EEPROMs of the 25 series. Although it uses page writing, you don't have to worry about the page limits. You can directly write bytes, integers, floats, arrays and strings (strings only work for AVR based boards.).
+With this library you can write data to and read data from SPI based EEPROMs of the 25 series. Although it uses page writing, you don't have to worry about the page limits. You can directly write bytes, integers, floats, arrays and strings (strings only work for AVR based boards).
 
 I have implemented the protection options for the storage and and the status register. 
 
