@@ -33,8 +33,11 @@ get	KEYWORD2
 put	KEYWORD2
 isBusy	KEYWORD2
 eepromReadStatusReg	KEYWORD2
-setSPIClockSpeed	KEYWORD2	
-
+setSPIClockSpeed	KEYWORD2
+continuousPutEnable	KEYWORD2
+continuousPut	KEYWORD2
+continuousPutDisable	KEYWORD2
+	
 #######################################
 # Constants (LITERAL1)
 #######################################
