@@ -77,6 +77,16 @@ public:
         return t;
     }
     
+    void continuousPutEnable(uint32_t addr);
+    void continuousPutDisable();
+    
+    template <typename T>
+    const T &continuousPut(const T &t){ 
+        const uint8_t *data = (const uint8_t *)&t;
+        continuousWriteEEPROM(data, sizeof(T)); 
+        return t;
+    }
+    
     bool isBusy();
     uint8_t eepromReadStatusReg(); 
     void setSPIClockSpeed(unsigned long clock); 
@@ -87,10 +97,12 @@ private:
     int16_t csPin;
     int16_t wpPin;
     uint16_t pageSize;
+    uint32_t contAddr;
         
     void eepromWriteEnable();
     void eepromWriteStatusReg(uint8_t cmd);
     void writeEEPROM(uint32_t addr, const uint8_t *buf, uint16_t sizeOfBuf);
+    void continuousWriteEEPROM(const uint8_t *buf, uint16_t sizeOfBuf);
     void readEEPROM(uint32_t addr, uint8_t *buf, uint16_t sizeOfBuf);   
 };
 

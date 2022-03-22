@@ -36,6 +36,7 @@ bool EEPROM_SPI_WE::init(){
     mySPISettings = SPISettings(8000000, MSBFIRST, SPI_MODE0);
     pinMode(csPin, OUTPUT);
     digitalWrite(csPin, HIGH);
+    contAddr = 0;
     
     if(wpPin != 999){
         pinMode(wpPin,OUTPUT);
@@ -226,6 +227,54 @@ void EEPROM_SPI_WE::writeEEPROM(uint32_t addr, const uint8_t *buf, uint16_t size
         arrayIndex += chunk;
         noOfBytesStillToWrite -= chunk;
         while(isBusy()){}       
+    }
+}
+
+void EEPROM_SPI_WE::continuousPutEnable(uint32_t addr){
+    contAddr = addr;
+    eepromWriteEnable();
+    _spi->beginTransaction(mySPISettings);
+    digitalWrite(csPin, LOW);
+    _spi->transfer(EEP_WRITE);
+    _spi->transfer((uint8_t)(addr>>8));
+    _spi->transfer((uint8_t)(addr&0xFF));
+}
+
+void EEPROM_SPI_WE::continuousPutDisable(){
+    digitalWrite(csPin, HIGH);
+    _spi->endTransaction();
+    while(isBusy());
+}
+
+void EEPROM_SPI_WE::continuousWriteEEPROM(const uint8_t *buf, uint16_t sizeOfBuf){
+    uint16_t noOfBytesStillToWrite = sizeOfBuf;
+    uint16_t arrayIndex = 0;
+    
+    while((noOfBytesStillToWrite != 0)){
+        uint16_t chunk = noOfBytesStillToWrite;
+        uint16_t positionInPage = contAddr % pageSize;
+        uint16_t spaceLeftInPage = pageSize - positionInPage;
+        bool pageEnd = false;
+        
+        if(spaceLeftInPage < noOfBytesStillToWrite){
+            chunk = spaceLeftInPage;
+            pageEnd = true;
+        }
+               
+        for(uint16_t i=arrayIndex; i<(arrayIndex + chunk); i++){
+            _spi->transfer((uint8_t)buf[i]);
+        }
+        
+        contAddr += chunk;
+        arrayIndex += chunk;
+        noOfBytesStillToWrite -= chunk;
+        if(pageEnd){
+            digitalWrite(csPin, HIGH);
+            _spi->endTransaction();
+            while(isBusy()){}
+            continuousPutEnable(contAddr);
+            pageEnd = false;
+        }
     }
 }
 
