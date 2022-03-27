@@ -15,7 +15,7 @@
 #include <SPI.h>
 #include <EEPROM_SPI_WE.h>
 const int csPin = 10; // Chip select pin
-const int wpPin = 9;  // Write protect pin (optional)
+const int wpPin = 9;  // Write protect pin (needed for this sketch)
 
 /* There are different options to create your EEPROM_SPI_WE object:
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin);
