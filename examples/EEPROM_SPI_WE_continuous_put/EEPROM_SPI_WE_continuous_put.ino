@@ -95,8 +95,8 @@ void setup(){
  
 
   /* Another continuous writing:  
-   * Here wirting starts at address 0. If your page size is >= 32 you will write
-   * everything into one page. So, only one write cycle wating time is needed at 
+   * Here writing starts at address 0. If your page size is >= 32 you will write
+   * everything into one page. So, only one write cycle waiting time is needed at 
    * the end. 
    */
   address = 0;
