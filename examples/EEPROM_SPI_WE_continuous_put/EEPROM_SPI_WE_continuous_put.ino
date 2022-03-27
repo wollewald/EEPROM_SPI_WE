@@ -31,7 +31,7 @@ void setup(){
     while(1);
   }
   /* You can change the SPI clock speed. The default of is 8 MHz */
-  //myEEP.setSPIClockSpeed(20000000); // use AFTER init()!
+  //myEEP.setSPIClockSpeed(4000000); // use AFTER init()!
   
   /* Select the page size of your EEPROM.
    * Choose EEPROM_PAGE_SIZE_xxx,  
