@@ -140,8 +140,7 @@ void setup(){
     myEEP.get(address, intToRead);
     address += sizeof(int);
     Serial.println(intToRead);
-  } 
- 
+  }  
 }
   
 void loop(){}
