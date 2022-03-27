@@ -25,7 +25,7 @@ const int wpPin = 9;  // Write protect pin (optional)
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin); 
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(&SPI, csPin, wpPin);  
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(&SPI, csPin);  
- * If you don't define the wpPin and you connect it it GND or VCC,  
+ * If you don't define the wpPin and you connect it to GND or VCC,  
  * then protectStatusRegister() is the only function that won't work.
  * Passing the SPI object allows you, for example, to use both SPI 
  * interfaces on the ESP32.
@@ -42,7 +42,7 @@ void setup(){
     while(1);
   }
   /* You can change the SPI clock speed. The default of is 8 MHz */
-  //myEEP.setSPIClockSpeed(20000000); // use AFTER init()!
+  //myEEP.setSPIClockSpeed(4000000); // use AFTER init()!
   
   /* Select the page size of your EEPROM.
    * Choose EEPROM_PAGE_SIZE_xxx,  
