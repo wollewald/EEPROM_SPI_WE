@@ -1,4 +1,4 @@
-/*******************************************************************************/
+/*******************************************************************************
 * This is an example sketch for the EEPROM_SPI_WE library
 *
 * It shows how to write data continuously and how to use the hold pin. 
