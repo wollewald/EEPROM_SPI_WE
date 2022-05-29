@@ -1,4 +1,4 @@
-/********************************************************************
+/******************************************************************************
 * This is an example sketch for the EEPROM_SPI_WE library.
 *
 * Here you learn the different how to erase pages, sectors or the
@@ -9,11 +9,11 @@
 * 
 * Written by Wolfgang (Wolle) Ewald.
 *
-* You will find a tutorial on my website soon:
-* https://wolles-elektronikkiste.de/    (German)
-* https://wolles-elektronikkiste.de/en/ (English)
+* Here you find the detailed documentation:
+* https://wolles-elektronikkiste.de/en/eeprom-part-3-external-spi-eeproms   (English)
+* https://wolles-elektronikkiste.de/eeprom-teil-3-externe-spi-eeproms       (German)
 *
-*********************************************************************/
+*******************************************************************************/
 
 #include <SPI.h>
 #include <EEPROM_SPI_WE.h>
