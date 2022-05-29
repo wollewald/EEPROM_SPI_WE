@@ -1,4 +1,4 @@
-/********************************************************************
+/*****************************************************************************
 * This is a library for SPI EEPROMs like the 25LCxxx, 25Axxx, etc.
 *
 * In case you like it would be cool if you give it a star.
@@ -11,7 +11,7 @@
 * https://wolles-elektronikkiste.de/en/eeprom-part-3-external-spi-eeproms   (English)
 * https://wolles-elektronikkiste.de/eeprom-teil-3-externe-spi-eeproms       (German)
 *
-*********************************************************************/
+*******************************************************************************/
 
 #include "EEPROM_SPI_WE.h"
 
