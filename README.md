@@ -9,6 +9,7 @@ The functions for erasing pages, sectors or the entire EEPROM only work with the
 
 I have tested several EEPROMs (25LC512, 25A512, 25LC640) using various MCU boards, such as the ESP32 development board, WEMOS D1 mini (ESP8266) and the Arduino Nano. 
 
-You will find a documentation on my home page soon:
+Here you find the detailed documentation:
 
-https://wolles-elektronikkiste.de/en/
+https://wolles-elektronikkiste.de/en/eeprom-part-3-external-spi-eeproms   (English)
+https://wolles-elektronikkiste.de/eeprom-teil-3-externe-spi-eeproms       (German)
