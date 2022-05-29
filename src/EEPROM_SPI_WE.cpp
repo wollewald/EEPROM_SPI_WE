@@ -7,9 +7,9 @@
 * 
 * Written by Wolfgang (Wolle) Ewald
 *
-* You will find a tutorial on my website soon:
-* https://wolles-elektronikkiste.de/    (German)
-* https://wolles-elektronikkiste.de/en/ (English)
+* Here you find the detailed documentation:
+* https://wolles-elektronikkiste.de/en/eeprom-part-3-external-spi-eeproms   (English)
+* https://wolles-elektronikkiste.de/eeprom-teil-3-externe-spi-eeproms       (German)
 *
 *********************************************************************/
 
