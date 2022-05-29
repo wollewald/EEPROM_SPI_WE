@@ -12,4 +12,5 @@ I have tested several EEPROMs (25LC512, 25A512, 25LC640) using various MCU board
 Here you find the detailed documentation:
 
 https://wolles-elektronikkiste.de/en/eeprom-part-3-external-spi-eeproms   (English)
+
 https://wolles-elektronikkiste.de/eeprom-teil-3-externe-spi-eeproms       (German)
