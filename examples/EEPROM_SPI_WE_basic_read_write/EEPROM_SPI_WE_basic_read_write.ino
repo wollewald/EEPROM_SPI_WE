@@ -66,14 +66,17 @@ void setup(){
   Serial.print("Float read: ");
   Serial.println(floatToRead);
 
-  String stringToWrite = "This is no poetry, I am just a simple test String";
+  char charArrayToWrite[] = "This is no poetry, I am just a simple char array"; 
+  myEEP.put(110, charArrayToWrite);  // write stringToWrite to address 110
+  char charArrayToRead[60] = "";  // reserve sufficient space 
+  myEEP.get(110, charArrayToRead);
+  Serial.print("Char array read: ");
+  Serial.println(charArrayToRead);
+
+  String stringToWrite = "Hello, I am a test string";
+  myEEP.putString(200, stringToWrite);   // String objects need a different put function
   String stringToRead = "";
-  /* For ESP32 and ESP8266 based boards String read/write does not work
-     this way. Use char arrays instead: */
-  // char stringToWrite[] = "This is no poetry, I am just a simple test String"; 
-  // char stringToRead[100] = ""; 
-  myEEP.put(110, stringToWrite);  // write stringToWrite to address 110
-  myEEP.get(110, stringToRead);
+  myEEP.getString(200, stringToRead);
   Serial.print("String read: ");
   Serial.println(stringToRead);
 
