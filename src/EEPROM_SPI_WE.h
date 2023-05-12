@@ -78,7 +78,7 @@ class EEPROM_SPI_WE
             return t;
         }
         
-        void putString(uint32_t addr, String &strToWrite);
+        uint32_t putString(uint32_t addr, String &strToWrite);
         void getString(uint32_t addr, String &strToRead);
         
         void continuousPutEnable(uint32_t addr);

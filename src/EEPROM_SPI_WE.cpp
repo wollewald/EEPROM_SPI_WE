@@ -141,11 +141,12 @@ void EEPROM_SPI_WE::protectStatusRegister(bool protect){
     }
 }
 
-void EEPROM_SPI_WE::putString(uint32_t addr, String &strToWrite){
+uint32_t EEPROM_SPI_WE::putString(uint32_t addr, String &strToWrite){
     int strLen = strToWrite.length() + 1; 
     char charArray[strLen];
     strToWrite.toCharArray(charArray, strLen);
-    writeEEPROM(addr, (uint8_t*)charArray, strToWrite.length() + 1);
+    writeEEPROM(addr, (uint8_t*)charArray, strLen);
+    return addr + strLen; 
 }
 
 void EEPROM_SPI_WE::getString(uint32_t addr, String &strToRead){
