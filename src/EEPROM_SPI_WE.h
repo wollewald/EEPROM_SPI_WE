@@ -47,6 +47,7 @@ class EEPROM_SPI_WE
         static constexpr uint8_t EEP_CE   {0xC7};  // chip erase
         static constexpr uint8_t EEP_RDID {0xAB};  // release from deep power down and read electronic signature
         static constexpr uint8_t EEP_DPD  {0xB9};  // deep power down mode
+        static constexpr uint8_t EEP_A8   {0x08};  // A8 address bit for small EEPROMs
         
         EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999) : _spi{&SPI}, csPin{cs}, wpPin{wp} {}
         EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999) : _spi{s}, csPin{cs}, wpPin{wp} {}
@@ -77,6 +78,9 @@ class EEPROM_SPI_WE
             return t;
         }
         
+        void putString(uint32_t addr, String &strToWrite);
+        void getString(uint32_t addr, String &strToRead);
+        
         void continuousPutEnable(uint32_t addr);
         void continuousPutDisable();
         
@@ -89,7 +93,8 @@ class EEPROM_SPI_WE
         
         bool isBusy();
         uint8_t eepromReadStatusReg(); 
-        void setSPIClockSpeed(unsigned long clock); 
+        void setSPIClockSpeed(unsigned long clock);
+        void setSmallEEPROM();
             
     protected:
         SPIClass *_spi;
@@ -98,6 +103,7 @@ class EEPROM_SPI_WE
         uint16_t wpPin;
         uint16_t pageSize;
         uint32_t contAddr;
+        bool smallEEPROM;
             
         void eepromWriteEnable();
         void eepromWriteStatusReg(uint8_t cmd);

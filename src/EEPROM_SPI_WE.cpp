@@ -23,6 +23,7 @@ bool EEPROM_SPI_WE::init(){
     pinMode(csPin, OUTPUT);
     digitalWrite(csPin, HIGH);
     contAddr = 0;
+    smallEEPROM = false;
     
     if(wpPin != 999){
         pinMode(wpPin,OUTPUT);
@@ -138,7 +139,28 @@ void EEPROM_SPI_WE::protectStatusRegister(bool protect){
         eepromWriteStatusReg(statusReg);
         digitalWrite(wpPin, LOW);
     }
-}   
+}
+
+void EEPROM_SPI_WE::putString(uint32_t addr, String &strToWrite){
+    int strLen = strToWrite.length() + 1; 
+    char charArray[strLen];
+    strToWrite.toCharArray(charArray, strLen);
+    writeEEPROM(addr, (uint8_t*)charArray, strToWrite.length() + 1);
+}
+
+void EEPROM_SPI_WE::getString(uint32_t addr, String &strToRead){
+    if(strToRead.length()){
+        strToRead.remove(0,strToRead.length());
+    }
+    uint8_t tmp[1] = {65}; // dummy
+    while(tmp[0] != 0){
+        readEEPROM(addr, tmp, 1);
+        if(tmp[0] != 0){
+            strToRead += (char)tmp[0];
+        }
+        addr++;
+    }
+}
 
 uint8_t EEPROM_SPI_WE::eepromReadStatusReg(){
     uint8_t statusReg = 0;
@@ -161,6 +183,10 @@ bool EEPROM_SPI_WE::isBusy(){
 
 void EEPROM_SPI_WE::setSPIClockSpeed(unsigned long clock){
     mySPISettings = SPISettings(clock, MSBFIRST, SPI_MODE0);
+}
+
+void EEPROM_SPI_WE::setSmallEEPROM(){
+    smallEEPROM = true;
 }
 
 /************************************************ 
@@ -198,9 +224,20 @@ void EEPROM_SPI_WE::writeEEPROM(uint32_t addr, const uint8_t *buf, uint16_t size
         
         _spi->beginTransaction(mySPISettings);
         digitalWrite(csPin, LOW);
-        _spi->transfer(EEP_WRITE);
-        _spi->transfer(static_cast<uint8_t>(addr>>8));
-        _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+        if(!smallEEPROM){
+            _spi->transfer(EEP_WRITE);
+            _spi->transfer(static_cast<uint8_t>(addr>>8));
+            _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+        }
+        else{
+            if(addr>>8){
+                _spi->transfer(EEP_WRITE | EEP_A8);
+            }
+            else {
+                _spi->transfer(EEP_WRITE);
+            }               
+            _spi->transfer(static_cast<uint8_t>(addr)); 
+        }
         
         for(uint16_t i=arrayIndex; i<(arrayIndex + chunk); i++){
             _spi->transfer(static_cast<uint8_t>(buf[i]));
@@ -221,9 +258,20 @@ void EEPROM_SPI_WE::continuousPutEnable(uint32_t addr){
     eepromWriteEnable();
     _spi->beginTransaction(mySPISettings);
     digitalWrite(csPin, LOW);
-    _spi->transfer(EEP_WRITE);
-    _spi->transfer(static_cast<uint8_t>(addr>>8));
-    _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+    if(!smallEEPROM){
+        _spi->transfer(EEP_WRITE);
+        _spi->transfer(static_cast<uint8_t>(addr>>8));
+        _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+    }
+    else{
+        if(addr>>8){
+                _spi->transfer(EEP_WRITE | EEP_A8);
+        }
+        else {
+            _spi->transfer(EEP_WRITE);
+        }               
+        _spi->transfer(static_cast<uint8_t>(addr)); 
+    }
 }
 
 void EEPROM_SPI_WE::continuousPutDisable(){
@@ -267,9 +315,20 @@ void EEPROM_SPI_WE::continuousWriteEEPROM(const uint8_t *buf, uint16_t sizeOfBuf
 void EEPROM_SPI_WE::readEEPROM(uint32_t addr, uint8_t *buf, uint16_t sizeOfBuf){    
     _spi->beginTransaction(mySPISettings);
     digitalWrite(csPin, LOW);
-    _spi->transfer(EEP_READ); 
-    _spi->transfer(static_cast<uint8_t>(addr>>8));
-    _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+    if(!smallEEPROM){
+        _spi->transfer(EEP_READ);
+        _spi->transfer(static_cast<uint8_t>(addr>>8));
+        _spi->transfer(static_cast<uint8_t>(addr&0xFF));
+    }
+    else{
+        if(addr>>8){
+                _spi->transfer(EEP_READ | EEP_A8);
+        }
+        else {
+            _spi->transfer(EEP_READ);
+        }               
+        _spi->transfer(static_cast<uint8_t>(addr)); 
+    }
     for(uint16_t i=0; i<sizeOfBuf; i++){
         buf[i] = _spi->transfer(0x00);
     }
