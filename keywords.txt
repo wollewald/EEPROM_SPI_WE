@@ -37,6 +37,9 @@ setSPIClockSpeed	KEYWORD2
 continuousPutEnable	KEYWORD2
 continuousPut	KEYWORD2
 continuousPutDisable	KEYWORD2
+getString	KEYWORD2
+putString	KEYWORD2
+setSmallEEPROM	KEYWORD2
 	
 #######################################
 # Constants (LITERAL1)
