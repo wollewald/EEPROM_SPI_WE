@@ -74,11 +74,14 @@ void setup(){
   Serial.println(charArrayToRead);
 
   String stringToWrite = "Hello, I am a test string";
-  myEEP.putString(200, stringToWrite);   // String objects need a different put function
+  unsigned int nextAddr = myEEP.putString(200, stringToWrite);   // String objects need a different put function
+  
   String stringToRead = "";
   myEEP.getString(200, stringToRead);
   Serial.print("String read: ");
   Serial.println(stringToRead);
+  Serial.print("Next free address: ");
+  Serial.println(nextAddr);
 
   int intArrayToWrite[20];
   int intArrayToRead[20];
