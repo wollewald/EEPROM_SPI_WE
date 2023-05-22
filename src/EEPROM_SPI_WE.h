@@ -32,10 +32,23 @@ typedef enum EEPROM_WRITE_PROTECT {
     PROTECT_NONE, PROTECT_UPPER_QUARTER, PROTECT_UPPER_HALF, PROTECT_ALL
 } eeprom_writeProtect;
 
+enum eeprom_size_t {    
+    EEPROM_KBITS_2 = 256,
+    EEPROM_KBITS_4 = 512,
+    EEPROM_KBITS_8 = 1024,
+    EEPROM_KBITS_16 = 2028,
+    EEPROM_KBITS_32 = 4096,
+    EEPROM_KBITS_64 = 8192,
+    EEPROM_KBITS_128 = 16384,
+    EEPROM_KBITS_256 = 32768,
+    EEPROM_KBITS_512 = 65536,
+    EEPROM_KBITS_1024 = 131072,
+    EEPROM_KBITS_2048 = 262144
+};
+
 class EEPROM_SPI_WE
 {
     public:
-
         static constexpr uint8_t EEP_READ {0x03};  // write
         static constexpr uint8_t EEP_WRITE{0x02};  // read
         static constexpr uint8_t EEP_WREN {0x06};  // write enable
@@ -48,12 +61,15 @@ class EEPROM_SPI_WE
         static constexpr uint8_t EEP_RDID {0xAB};  // release from deep power down and read electronic signature
         static constexpr uint8_t EEP_DPD  {0xB9};  // deep power down mode
         static constexpr uint8_t EEP_A8   {0x08};  // A8 address bit for small EEPROMs
+        static constexpr uint8_t EEP_A9   {0x08};  // A9 address bit for small EEPROMs
         
         EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999) : _spi{&SPI}, csPin{cs}, wpPin{wp} {}
         EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999) : _spi{s}, csPin{cs}, wpPin{wp} {}
         
         bool init();
+        uint32_t getMemorySize(); //neu
         void setPageSize(eeprom_pageSize eps);
+        void setMemorySize(eeprom_size_t size); // neu
         void deepPowerDown();
         uint8_t powerUpAndReadID();
         void erasePage(uint32_t addr);
@@ -104,6 +120,7 @@ class EEPROM_SPI_WE
         uint16_t pageSize;
         uint32_t contAddr;
         bool smallEEPROM;
+        uint32_t memSize;
             
         void eepromWriteEnable();
         void eepromWriteStatusReg(uint8_t cmd);
