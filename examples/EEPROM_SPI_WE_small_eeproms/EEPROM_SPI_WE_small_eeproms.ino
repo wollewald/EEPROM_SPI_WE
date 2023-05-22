@@ -58,9 +58,9 @@ void setup(){
   myEEP.setPageSize(EEPROM_PAGE_SIZE_16);
 
   /* Small EEPROMs do not have an embedded instruction to erase
-   * the complete chip. There the eraseCompleteEEPROM function will
+   * the complete chip. Therefore, the eraseCompleteEEPROM function will
    * override every byte with 0. For this, you need to specify the 
-   * EEPROM size in kbits:
+   * EEPROM size in kbits. You can choose:
    * EEPROM_KBITS_x with x = 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 or 2048
    */
   // myEEP.setMemorySize(EEPROM_KBITS_2); // adjust and uncomment
