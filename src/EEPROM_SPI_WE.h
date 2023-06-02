@@ -61,7 +61,7 @@ class EEPROM_SPI_WE
         static constexpr uint8_t EEP_RDID {0xAB};  // release from deep power down and read electronic signature
         static constexpr uint8_t EEP_DPD  {0xB9};  // deep power down mode
         static constexpr uint8_t EEP_A8   {0x08};  // A8 address bit for small EEPROMs
-        static constexpr uint8_t EEP_A9   {0x08};  // A9 address bit for small EEPROMs
+        static constexpr uint8_t EEP_A9   {0x10};  // A9 address bit for small EEPROMs
         
         EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999) : _spi{&SPI}, csPin{cs}, wpPin{wp} {}
         EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999) : _spi{s}, csPin{cs}, wpPin{wp} {}
