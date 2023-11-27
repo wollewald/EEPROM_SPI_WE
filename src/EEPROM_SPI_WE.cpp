@@ -19,7 +19,7 @@
     
 bool EEPROM_SPI_WE::init(){    
     _spi->begin();
-    mySPISettings = SPISettings(8000000, MSBFIRST, SPI_MODE0);
+    mySPISettings = SPISettings(spiClock, MSBFIRST, SPI_MODE0);
     pinMode(csPin, OUTPUT);
     digitalWrite(csPin, HIGH);
     contAddr = 0;

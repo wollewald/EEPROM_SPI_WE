@@ -63,8 +63,8 @@ class EEPROM_SPI_WE
         static constexpr uint8_t EEP_A8   {0x08};  // A8 address bit for small EEPROMs
         static constexpr uint8_t EEP_A9   {0x10};  // A9 address bit for small EEPROMs
         
-        EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999) : _spi{&SPI}, csPin{cs}, wpPin{wp} {}
-        EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999) : _spi{s}, csPin{cs}, wpPin{wp} {}
+        EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999, uint32_t sc = 8000000) : _spi{&SPI}, csPin{cs}, wpPin{wp}, spiClock{sc} {}
+        EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999, uint32_t sc = 8000000) : _spi{s}, csPin{cs}, wpPin{wp}, spiClock{sc} {}
         
         bool init();
         uint32_t getMemorySize(); //neu
@@ -117,6 +117,7 @@ class EEPROM_SPI_WE
         SPISettings mySPISettings;
         uint16_t csPin;
         uint16_t wpPin;
+		uint32_t spiClock;
         uint16_t pageSize;
         uint32_t contAddr;
         bool smallEEPROM;
