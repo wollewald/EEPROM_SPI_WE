@@ -26,7 +26,7 @@ const int wpPin = 9;  // Write protect pin (optional)
  * Passing the SPI object allows you, for example, to use both SPI 
  * interfaces on the ESP32.
  */
-  EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin);
+  EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin, 2000000);
 
 void setup(){
   Serial.begin(9600);
