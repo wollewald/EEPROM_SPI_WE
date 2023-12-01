@@ -45,9 +45,9 @@ void setup(){
     while(1);
   }
 
-  /* You can change the SPI clock speed. The default is 8 MHz. 
-     Check the data sheet which clock speed is allowed. The 
-     frequency limit migh also depend on the voltage. */
+  /* You can change the SPI clock speed also after you have created your 
+     object. The default is 8 MHz. Check the data sheet which clock speed is 
+     allowed. The frequency limit migh also depend on the voltage. */
   myEEP.setSPIClockSpeed(2000000); // use AFTER init()! 
 
   /* Function to set small EEPROMs */
