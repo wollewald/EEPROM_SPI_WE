@@ -17,8 +17,10 @@ const int csPin = 10; // Chip select pin
 const int wpPin = 9;  // Write protect pin (optional)
 
 /* There are different options to create your EEPROM_SPI_WE object:
+ * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin, spiClockSpeed); // e.g. uint32t spiClockSpeed = 4000000
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin);
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin); 
+ * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(&SPI, csPin, wpPin, spiClockSpeed); 
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(&SPI, csPin, wpPin);  
  * EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(&SPI, csPin);  
  * If you don't define the wpPin and you connect it to GND or VCC,  
@@ -26,7 +28,7 @@ const int wpPin = 9;  // Write protect pin (optional)
  * Passing the SPI object allows you, for example, to use both SPI 
  * interfaces on the ESP32.
  */
-  EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin, 2000000);
+  EEPROM_SPI_WE myEEP = EEPROM_SPI_WE(csPin, wpPin);
 
 void setup(){
   Serial.begin(9600);
