@@ -24,11 +24,11 @@
 
 #include <SPI.h>
 
-typedef enum EEPROM_PAGE_SIZE {
+typedef enum EEPROM_WE_PAGE_SIZE {
     EEPROM_PAGE_SIZE_16, EEPROM_PAGE_SIZE_32, EEPROM_PAGE_SIZE_64, EEPROM_PAGE_SIZE_128, EEPROM_PAGE_SIZE_256
 } eeprom_pageSize;
 
-typedef enum EEPROM_WRITE_PROTECT {
+typedef enum EEPROM_WE_WRITE_PROTECT {
     PROTECT_NONE, PROTECT_UPPER_QUARTER, PROTECT_UPPER_HALF, PROTECT_ALL
 } eeprom_writeProtect;
 
@@ -63,8 +63,8 @@ class EEPROM_SPI_WE
         static constexpr uint8_t EEP_A8   {0x08};  // A8 address bit for small EEPROMs
         static constexpr uint8_t EEP_A9   {0x10};  // A9 address bit for small EEPROMs
         
-        EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999) : _spi{&SPI}, csPin{cs}, wpPin{wp} {}
-        EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999) : _spi{s}, csPin{cs}, wpPin{wp} {}
+        EEPROM_SPI_WE(uint16_t cs, uint16_t wp = 999, uint32_t sc = 8000000) : _spi{&SPI}, csPin{cs}, wpPin{wp}, spiClock{sc} {}
+        EEPROM_SPI_WE(SPIClass *s, uint16_t cs, uint16_t wp = 999, uint32_t sc = 8000000) : _spi{s}, csPin{cs}, wpPin{wp}, spiClock{sc} {}
         
         bool init();
         uint32_t getMemorySize(); //neu
@@ -117,6 +117,7 @@ class EEPROM_SPI_WE
         SPISettings mySPISettings;
         uint16_t csPin;
         uint16_t wpPin;
+		uint32_t spiClock;
         uint16_t pageSize;
         uint32_t contAddr;
         bool smallEEPROM;
