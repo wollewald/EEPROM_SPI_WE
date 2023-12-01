@@ -43,7 +43,10 @@ void setup(){
     Serial.println("EEPROM does not respond");
     while(1);
   }
-  /* You can change the SPI clock speed. The default of is 8 MHz */
+   /* You can change the SPI clock speed also after you have created your 
+   * object. The default is 8 MHz. Check the data sheet which clock speed is 
+   *  allowed. The frequency limit migh also depend on the voltage. 
+   */
   //myEEP.setSPIClockSpeed(4000000); // use AFTER init()!
   
   /* Select the page size of your EEPROM.
