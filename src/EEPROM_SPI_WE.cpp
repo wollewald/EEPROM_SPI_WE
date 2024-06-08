@@ -79,6 +79,9 @@ void EEPROM_SPI_WE::erasePage(uint32_t addr){
     _spi->beginTransaction(mySPISettings);
     digitalWrite(csPin, LOW);
     _spi->transfer(EEP_PE);
+    if (memSize > EEPROM_KBITS_512) {
+      _spi->transfer(static_cast<uint8_t>(addr>>16));
+    }
     _spi->transfer(static_cast<uint8_t>(addr>>8));
     _spi->transfer(static_cast<uint8_t>(addr&0xFF));
     digitalWrite(csPin, HIGH);
@@ -93,6 +96,9 @@ void EEPROM_SPI_WE::eraseSector(uint32_t addr){
     _spi->beginTransaction(mySPISettings);
     digitalWrite(csPin, LOW);
     _spi->transfer(EEP_SE);
+    if (memSize > EEPROM_KBITS_512) {
+      _spi->transfer(static_cast<uint8_t>(addr>>16));
+    }
     _spi->transfer(static_cast<uint8_t>(addr>>8));
     _spi->transfer(static_cast<uint8_t>(addr&0xFF));
     digitalWrite(csPin, HIGH);
@@ -241,6 +247,9 @@ void EEPROM_SPI_WE::writeEEPROM(uint32_t addr, const uint8_t *buf, uint16_t size
         digitalWrite(csPin, LOW);
         if(!smallEEPROM){
             _spi->transfer(EEP_WRITE);
+	    if (memSize > EEPROM_KBITS_512) {
+	      _spi->transfer(static_cast<uint8_t>(addr>>16));
+	    }
             _spi->transfer(static_cast<uint8_t>(addr>>8));
             _spi->transfer(static_cast<uint8_t>(addr&0xFF));
         }
@@ -280,6 +289,9 @@ void EEPROM_SPI_WE::continuousPutEnable(uint32_t addr){
     digitalWrite(csPin, LOW);
     if(!smallEEPROM){
         _spi->transfer(EEP_WRITE);
+	if (memSize > EEPROM_KBITS_512) {
+	  _spi->transfer(static_cast<uint8_t>(addr>>16));
+	}
         _spi->transfer(static_cast<uint8_t>(addr>>8));
         _spi->transfer(static_cast<uint8_t>(addr&0xFF));
     }
@@ -337,6 +349,9 @@ void EEPROM_SPI_WE::readEEPROM(uint32_t addr, uint8_t *buf, uint16_t sizeOfBuf){
     digitalWrite(csPin, LOW);
     if(!smallEEPROM){
         _spi->transfer(EEP_READ);
+	if (memSize > EEPROM_KBITS_512) {
+	  _spi->transfer(static_cast<uint8_t>(addr>>16));
+	}
         _spi->transfer(static_cast<uint8_t>(addr>>8));
         _spi->transfer(static_cast<uint8_t>(addr&0xFF));
     }

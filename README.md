@@ -7,7 +7,9 @@ I have implemented the protection options for the storage and and the status reg
 
 The functions for erasing pages or sectors only work with the larger EEPROMs. Check the data sheet if you are not sure. 
 
-I have tested several EEPROMs (25LC512, 25A512, 25LC640, 25LC040A) using various MCU boards, such as the ESP32 development board, WEMOS D1 mini (ESP8266) and the Arduino Nano. 
+I have tested several EEPROMs (25LC512, 25A512, 25LC640, 25LC040A) using various MCU boards, such as the ESP32 development board, WEMOS D1 mini (ESP8266) and the Arduino Nano.
+
+The library can now also deal with EEPROMs that use 24 bit addressing such as the 25CSM04. You need to set the memory size before accessing the EEPROM using the method `setMemorySize`. Note that this particular EEPROM25CSM04 does not support erase operations.
 
 Here you find the detailed documentation:
 
