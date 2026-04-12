@@ -52,7 +52,25 @@ void setup(){
    * Choose EEPROM_PAGE_SIZE_xxx,  
    * with xxx = 16, 32, 64, 128 or 256
    */
-  myEEP.setPageSize(EEPROM_PAGE_SIZE_128);
+  myEEP.setPageSize(EEPROM_PAGE_SIZE_32);
+
+  /* Select the memory size of your EEPROM. This is important in case you use 
+   * EEPROMs > 512 kBit or in case you want to erase a complete small EEPROM 
+   * (typ. < 8 kBits). You can choose from:
+   * EEPROM_KBITS_2 = 256 bytes,
+   * EEPROM_KBITS_4 = 512 bytes,
+   * EEPROM_KBITS_8 = 1024 bytes,
+   * EEPROM_KBITS_16 = 2028 bytes,
+   * EEPROM_KBITS_32 = 4096 bytes,
+   * EEPROM_KBITS_64 = 8192 bytes,
+   * EEPROM_KBITS_128 = 16384 bytes,
+   * EEPROM_KBITS_256 = 32768 bytes,
+   * EEPROM_KBITS_512 = 65536 bytes,
+   * EEPROM_KBITS_1024 = 131072 bytes,
+   * EEPROM_KBITS_2048 = 262144 bytes,
+   * EEPROM_KBITS_4096 = 524288 bytes,
+   */
+  //myEEP.setMemorySize(EEPROM_KBITS_1024);
 
   unsigned int address = 0;
   unsigned long writeDuration = 0;
